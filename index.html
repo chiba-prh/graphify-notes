@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Graphify 段階学習ノート</title>
+<style>
+:root{--bg:#0f1115;--card:#181b22;--fg:#e7e9ee;--mut:#9aa3b2;--line:#2a2f3a;
+ --blue:#4c8dff;--green:#3ecf8e;--amber:#f0b429;--red:#ff6b6b;--purple:#b18cff;}
+@media(prefers-color-scheme:light){:root{--bg:#f6f7f9;--card:#fff;--fg:#1b1f27;--mut:#5b6472;--line:#e3e6ec;}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.7 -apple-system,"Segoe UI","Yu Gothic UI",Meiryo,sans-serif;padding:32px 20px 90px}
+.wrap{max-width:1000px;margin:0 auto}
+h1{font-size:25px;margin:0 0 2px}
+.sub{color:var(--mut);margin:0 0 24px}
+h2{font-size:19px;margin:36px 0 12px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+h3{font-size:16px;margin:18px 0 6px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.kpi .num{font-size:28px;font-weight:800}
+.kpi .lbl{color:var(--mut);font-size:12.5px;margin-top:2px}
+ul{margin:6px 0;padding-left:22px}li{margin:5px 0}
+.done::before{content:"✅ ";}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:6px;display:block;overflow-x:auto}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--mut);font-size:12.5px;white-space:nowrap}
+code{background:rgba(128,128,128,.18);padding:1px 6px;border-radius:5px;font-family:Consolas,monospace;font-size:13px;word-break:break-all}
+pre{background:rgba(128,128,128,.12);border:1px solid var(--line);border-radius:8px;padding:10px 12px;overflow-x:auto;font-family:Consolas,monospace;font-size:12.5px;line-height:1.55;margin:8px 0}
+.step{border-left:3px solid var(--blue);padding:8px 14px;margin:10px 0;background:var(--card);border-radius:0 8px 8px 0}
+.step.opt{border-color:var(--mut)}
+.step h4{margin:0 0 3px}
+.muted{color:var(--mut);font-size:13px}
+.badge{font-size:12px;padding:2px 9px;border-radius:6px;font-weight:700;background:#889;color:#fff;vertical-align:middle}
+.b-blue{background:var(--blue)}.b-green{background:var(--green);color:#0b2a1c}.b-amber{background:var(--amber);color:#2a1f00}
+.warn{border-left:3px solid var(--amber);background:var(--card);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0}
+.info{border-left:3px solid var(--blue);background:var(--card);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0}
+.qa{border-left:3px solid var(--green);background:var(--card);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0}
+.qa b{color:var(--green)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:14px;color:var(--mut)}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--fg)}
+.toc a{color:var(--blue);text-decoration:none}
+.toc li{margin:2px 0}
+a{color:var(--blue)}
+</style></head><body><div class="wrap">
+
+<h1>Graphify 段階学習ノート</h1>
+<p class="sub">2026-10-01〜10-05｜きっかけ：ずんだAI研究所「AIにgrepさせるな｜CodeGraphとGraphifyでコードを爆速で理解する」（2026-09-23公開）</p>
+
+<div class="grid">
+ <div class="kpi"><div class="num">2,402</div><div class="lbl">元動画の再生数（公開9日目）<br>チャンネル64本中2位</div></div>
+ <div class="kpi"><div class="num" style="color:var(--green)">62%</div><div class="lbl">CodeGraph公式ベンチ<br>トークン減（合計）</div></div>
+ <div class="kpi"><div class="num" style="color:var(--amber)">67k / 18k</div><div class="lbl">CodeGraphの弱点<br>最後に残る文脈（VS Code）</div></div>
+ <div class="kpi"><div class="num" style="color:var(--blue)">約6秒</div><div class="lbl">Graphifyでhttpxの地図作成<br>（72ファイル・コードのみ）</div></div>
+ <div class="kpi"><div class="num" style="color:var(--purple)">Lv5</div><div class="lbl">学習の到達点<br>（全7段階中）</div></div>
+</div>
+
+<h2>目次</h2>
+<div class="card toc"><ol>
+ <li><a href="#s1">きっかけ：動画と再生数</a></li>
+ <li><a href="#s2">CodeGraphの公式ベンチを読み解く</a></li>
+ <li><a href="#s3">Graphify Lv1：何を解決する道具か</a></li>
+ <li><a href="#s4">Graphify Lv2：グラフの基本用語</a></li>
+ <li><a href="#s5">Graphify Lv3：地図の作り方</a></li>
+ <li><a href="#s6">Graphify Lv4：AIの使い方（スキル・コマンド・フック・strict）</a></li>
+ <li><a href="#s7">Graphify Lv5：実際に触った結果</a></li>
+ <li><a href="#s8">CodeGraph と Graphify の比較</a></li>
+ <li><a href="#s9">途中で訂正したこと</a></li>
+ <li><a href="#s10">現状と次のアクション</a></li>
+ <li><a href="#s11">公式資料と保存ファイル</a></li>
+</ol></div>
+
+<!-- ========== 1 ========== -->
+<h2 id="s1">1. きっかけ：動画と再生数</h2>
+<div class="card">
+ <p>ずんだAI研究所の動画を文字起こしして要約。CodeGraph（AI用の索引）とGraphify（全体を見る地図）を比べる内容だった。</p>
+ <table>
+  <tr><th>項目</th><th>数字（10/2時点）</th></tr>
+  <tr><td>grepの回（公開9日目）</td><td><b>2,402回（64本中2位）</b>、コメント40件</td></tr>
+  <tr><td>1位（公開から約6か月）</td><td>6,649回「AIスロップで年収6億…」</td></tr>
+  <tr><td>チャンネルの中央値／平均</td><td>121回／400回</td></tr>
+ </table>
+ <p class="muted">中央値の約20倍。伸びるペースで見ればチャンネル内で最速。</p>
+</div>
+
+<!-- ========== 2 ========== -->
+<h2 id="s2">2. CodeGraphの公式ベンチを読み解く</h2>
+<div class="card">
+ <h3>テストの条件</h3>
+ <ul>
+  <li>実在のOSS 7つ（VS Code 約11k、Django 約3k、Tokio、OkHttp、Excalidraw、Gin、Alamofire）。Claude Opus 4.8で <code>claude -p</code> を自動実行</li>
+  <li>各リポジトリで<b>「○○はどう動いている？」という構造の質問を1つ</b>だけ。「あり／なし」を4回ずつ実行し、中央値をとった（2026-08-05に再測定）</li>
+  <li><b>codegraphコマンド（CLI）は両方で禁止</b>。禁止しないと「なし」側が28回中26回、Bash経由でこっそりCodeGraphを使っていた。コマンド経由の呼び出しはツール回数に数えられないのに、結果は文脈に入るので、比較がゆがむ。今回は28回すべて止められ、混ざったのは0回</li>
+ </ul>
+ <h3>結果</h3>
+ <p>ツール呼び出し<b>88%減</b>・<b>53%速い</b>・トークン<b>62%減</b>・<b>44%安い</b>・ありの側は7つ全部でファイルを1回も読まずに答えた。</p>
+ <table>
+  <tr><th>リポジトリ</th><th>ツール回数（あり vs なし）</th><th>料金</th></tr>
+  <tr><td>Excalidraw</td><td>2 vs 43</td><td>78%安い（$0.54 vs $2.43）</td></tr>
+  <tr><td>VS Code</td><td>2 vs 28</td><td>71%安い（$0.53 vs $1.80）</td></tr>
+  <tr><td>Django</td><td>3 vs 14</td><td>13%安いだけ</td></tr>
+  <tr><td>Gin</td><td>1 vs 7</td><td>ほぼ同じ（$0.31 vs $0.31）</td></tr>
+ </table>
+ <div class="info"><b>差を決めるのはファイル数ではなく「その質問でどれだけ探し回るか」。</b>Alamofire（110ファイル）は大きく効き、Django（3,000ファイル）は13%だけだった。</div>
+
+ <h3>「精度」の意味</h3>
+ <p>原文はprecision。<b>必要なコードだけを的確に取ってこられること（探し物の的中率）</b>で、コーディングがうまくなるという意味ではない。ベンチは時間・回数・トークン・料金を測ったもので、書いたコードの品質は測っていない。</p>
+
+ <h3>合計は少ないのに、最後に残る量は多い</h3>
+ <p>AIは1回やり取りするたびに、それまでの会話を全部読み直している。</p>
+ <table>
+  <tr><th></th><th>意味</th><th>効くもの</th></tr>
+  <tr><td>処理したトークンの合計</td><td>机の上の量 × 読み直した回数の積み重ね</td><td>料金</td></tr>
+  <tr><td>最後に残る量</td><td>作業が終わった時点で机の上にある量</td><td>空き容量</td></tr>
+ </table>
+ <ul>
+  <li><b>grep方式</b>：小さい結果を何十回も取る。古い結果はClaude Codeが片付ける（マイクロコンパクション）ので、机はすっきりしている。ただし往復が多く、合計は大きい</li>
+  <li><b>CodeGraph</b>：分厚い資料を1〜4回で持ってくる。往復が少ないので合計は小さい。ただし資料が机に残る（VS Codeで6.7万対1.8万）</li>
+  <li>公式の言葉：「速さと机の狭さは、<b>同じ仕組みの表と裏</b>」</li>
+  <li>公式の数字は「1つの質問の中」の合計。<b>その後も同じセッションで作業を続けると、残った分を毎回読み直す</b>コストは数字に含まれていない（ただし大半はキャッシュ読み取りで安い）</li>
+ </ul>
+ <h3>使い方の結論</h3>
+ <ul>
+  <li><b>作業の入口</b>（流れをつかむ）と<b>影響範囲の確認</b>で、要所に1回ずつ使う。大きな調べ物が終わったらセッションを区切る</li>
+  <li>直す場所がわかっている小さな修正や、全部読める小さなプロジェクトでは使わなくてよい</li>
+  <li><b>サブエージェントに調べ物を任せると効果が消える</b>（サブエージェントは結局ファイルを読むため）。CodeGraphはメインのAIが直接使ったときだけ効く</li>
+ </ul>
+</div>
+
+<!-- ========== 3 ========== -->
+<h2 id="s3">3. Graphify Lv1：何を解決する道具か</h2>
+<div class="card">
+ <p><b>プロジェクトの「地図」を1回作ってファイルに残し、セッションをまたいで使い回す道具。</b></p>
+ <ul>
+  <li>同じ会話の中なら、一度読んだものは探し直さない。でも会話の記憶は<b>一時的で、読んだ部分だけ</b>。新しいセッション、片付け（コンパクト）、まだ見ていない場所では、また1から探す</li>
+  <li>地図は<b>ファイルとして残り、プロジェクト全体をカバー</b>する（会話の記憶＝今日歩いて覚えた道、地図＝紙の地図）</li>
+  <li><b>作るのも取り出すのもGraphify（普通のプログラム）</b>。AIは取り出された一部を受け取るだけなので軽い。graph.json本体はAIの文脈に入らない（図書館の目録のたとえ）</li>
+  <li>AIの仕事が「探す＋読む」から「読むだけ」になる。地図が返すのは場所とつながりなので、直すときは該当ファイルを読む</li>
+  <li>画像やPDFも、一度地図にすれば使い回せる。ただし残るのは「何が描かれていて、何とつながるか」で、見た目の細部は元の画像を見る必要がある</li>
+ </ul>
+ <div class="flow"><span class="pill">地図なし</span>AI：grep → 読む → grep → 読む…　<span class="pill">地図あり</span>Graphify：地図から取り出す → AI：必要なファイルだけ読む</div>
+ <div class="qa"><b>確認Q：</b>「Degreeがとても大きいノード」を変えるとき、なぜ注意が必要？ → <b>A：影響する範囲が広いから</b>（Lv2の確認）</div>
+</div>
+
+<!-- ========== 4 ========== -->
+<h2 id="s4">4. Graphify Lv2：グラフの基本用語</h2>
+<div class="card">
+ <table>
+  <tr><th>用語</th><th>意味</th><th>graph.htmlでは</th><th>路線図で言うと</th></tr>
+  <tr><td>ノード</td><td>1つの「もの」（関数・クラス・ファイル・見出し・画像の中の概念）</td><td>小さな点</td><td>駅</td></tr>
+  <tr><td>エッジ</td><td>つながり（calls・imports・inherits・uses・method など）</td><td>細い線</td><td>線路</td></tr>
+  <tr><td>コミュニティ</td><td>つながりの濃いまとまり（Leiden法で自動）</td><td>点の色</td><td>路線</td></tr>
+  <tr><td>god node</td><td>特にたくさんつながる中心</td><td>線が集中する点</td><td>大きな乗換駅</td></tr>
+  <tr><td>次数（Degree）</td><td>1つのノードにつながる線の数</td><td><code>Degree: 47</code></td><td>乗り入れる路線数</td></tr>
+ </table>
+ <h3>確かさの印（3種類）</h3>
+ <table>
+  <tr><th>印</th><th>意味</th></tr>
+  <tr><td><code>EXTRACTED</code></td><td>ソースにはっきり書いてあった（確かさ1.0）</td></tr>
+  <tr><td><code>INFERRED</code></td><td>推測でつないだ。0.95（ほぼ確実）〜0.55（当て推量）の点数付き</td></tr>
+  <tr><td><code>AMBIGUOUS</code></td><td>あいまい。レポートで「人が確認して」と知らせる</td></tr>
+ </table>
+</div>
+
+<!-- ========== 5 ========== -->
+<h2 id="s5">5. Graphify Lv3：地図の作り方</h2>
+<div class="card">
+ <div class="flow"><span class="pill">①探す detect</span>→<span class="pill">②読む extract（3段階）</span>→<span class="pill">③つなぐ build</span>→<span class="pill">④グループ分け cluster</span>→<span class="pill">⑤分析 analyze</span>→<span class="pill">⑥書き出し export</span></div>
+ <table style="margin-top:12px">
+  <tr><th>段階</th><th>対象</th><th>誰が読むか</th><th>料金</th></tr>
+  <tr><td>Pass 1</td><td>コード</td><td>tree-sitter（ローカル）</td><td>0円</td></tr>
+  <tr><td>Pass 2</td><td>動画・音声</td><td>faster-whisper（ローカルの文字起こし）。god nodeを文字起こしのヒントに使う</td><td>0円</td></tr>
+  <tr><td>Pass 3</td><td>ドキュメント・PDF・画像</td><td>Claudeのサブエージェントを並列起動</td><td>トークンがかかる</td></tr>
+ </table>
+ <h3>なぜコードはLLMなしで読めるのか</h3>
+ <p>プログラムは<b>文法が厳密</b>なので、ルールに当てはめるだけで「関数がある」「呼んでいる」が決まる（日本語の「彼はそれを渡した」は文脈が必要）。tree-sitterはソースを構文木（AST）に分解する。速い・無料・毎回同じ結果・外に送らない。わからないのは、書いた人の意図と、実行するまで決まらない呼び出し。</p>
+ <h3>キャッシュ</h3>
+ <p>読んだファイルは中身の指紋（SHA256）で記録（<code>graphify-out/cache/</code>）。再実行では変わったファイルだけ読み直す。画像やPDFの料金は最初の1回だけ。</p>
+ <div class="qa"><b>確認Q：</b>コードだけのプロジェクトで地図を作るとき、AIの料金はかかる？ → <b>A：かからない。コードはtree-sitterで読むから</b><br><span class="muted">補足：<code>/graphify</code> スキル経由だと、Claudeが手順書を読む分の少しのトークンは使う。さらにLv5で、グループ名付けにClaudeが使われることが判明（下記）。</span></div>
+</div>
+
+<!-- ========== 6 ========== -->
+<h2 id="s6">6. Graphify Lv4：AIの使い方</h2>
+<div class="card">
+<pre>【入口】①スキル /graphify ……………… 地図を作る・質問を受け付ける
+【引く】②query / path / explain …… 地図から一部を取り出すコマンド
+        ③MCPサーバー（任意）……………… ②をツールとして呼べるようにしたもの
+【促す】④CLAUDE.mdのルール＋フック …… 「grepの前に地図を使って」と促す
+        ⑤strictモード ………………………… 最初の1回だけ読み取りを止める</pre>
+ <h3>② 3つのコマンド</h3>
+ <table>
+  <tr><th>コマンド</th><th>使いどころ</th><th>たとえ</th></tr>
+  <tr><td><code>query "質問"</code></td><td>広く聞く。BFS（広く）が初期設定、<code>--dfs</code>で深く。<code>--budget</code>で返す量の上限</td><td>周りの路線を見せて</td></tr>
+  <tr><td><code>path A B</code></td><td>AからBへどうつながる？</td><td>乗り換え案内</td></tr>
+  <tr><td><code>explain X</code></td><td>Xについて（定義場所とつながり）</td><td>駅の案内板</td></tr>
+ </table>
+ <div class="warn"><b>queryは文字列の部分一致で探す。同義語も、言語をまたいだ一致もない。</b>英語の関数名の地図に日本語でそのまま聞くと0件になる。そのためスキルは、地図の単語一覧を作り、その中から質問に合う単語を最大12個選んでから検索するようAIに指示している。</div>
+
+ <h3>④ 促す仕組みの正体</h3>
+ <p><code>.claude\settings.json</code> に PreToolUse フックが書き込まれる。</p>
+<pre>"PreToolUse": [
+  { "matcher": "Bash|Grep", "hooks": [{ "command": "graphify hook-guard search" }] },
+  { "matcher": "Read|Glob", "hooks": [{ "command": "graphify hook-guard read" }] }
+]</pre>
+ <ul>
+  <li>AIがツールを使う<b>直前に毎回</b>、「MANDATORY：先に <code>graphify query</code> を使って」という<b>お願いの文章</b>がAIの会話に差し込まれる（<code>additionalContext</code>）。サブエージェントにも同じルールを伝えるよう指示している</li>
+  <li>ツールの実行は止めない（＝促すだけ）。地図がない、プロジェクト外、地図が古いときは、出さないか弱める。エラー時は何もせず通す（fails open）</li>
+  <li>CLAUDE.md＝朝礼での注意、フック＝作業のたびに肩をたたく人、strict＝最初の1回だけ通さない門番</li>
+ </ul>
+ <h3>⑤ strictモード</h3>
+ <ul>
+  <li>Graphifyのオプション（<code>graphify install --project --strict</code>）。Claude Codeのフックという「コンセント」を借りている</li>
+  <li>セッションで最初の生ファイル読み取りを1回だけ <code>permissionDecision: "deny"</code> で拒否し、地図に誘導する。2回目からは促すだけに戻る</li>
+  <li>切り替え：<code>GRAPHIFY_HOOK_STRICT=1</code>／<code>0</code>。Claude Code向けの機能</li>
+ </ul>
+</div>
+
+<!-- ========== 7 ========== -->
+<h2 id="s7">7. Graphify Lv5：実際に触った結果</h2>
+<div class="card">
+ <ul>
+  <li class="done"><code>pipx install graphifyy</code> → 0.9.76（Claude Codeの設定には触れていない）</li>
+  <li class="done">題材：httpx（Pythonファイル60個）を <code>graphify_lab</code> にダウンロード</li>
+  <li class="done"><code>graphify extract . --code-only</code> → <b>約6秒</b>でノード1,779・エッジ3,756・コミュニティ106</li>
+  <li class="done"><code>graphify cluster-only .</code> → 約28秒でGRAPH_REPORT.mdとgraph.htmlができた</li>
+ </ul>
+ <div class="warn"><b>予想外：グループ名付けにClaudeが使われた。</b>APIキーがないとき、PCにClaude Codeがあると自動で <code>claude -p</code> を呼ぶ作りだった（モデル未指定ならOpus）。入力約9.7万・出力約1,300トークンをClaude Codeの利用枠から使用。避けるには <code>--no-label</code>、安くするなら <code>GRAPHIFY_CLAUDE_CLI_MODEL=haiku</code>。</div>
+ <h3>試したコマンド</h3>
+<pre>$ graphify explain "DigestAuth"
+Node: DigestAuth
+  Source:    httpx/_auth.py L175
+  Community: Digest Authentication
+  Degree:    13
+  --> Auth [inherits] [EXTRACTED]
+  --> Response [uses] [INFERRED]
+  --> .auth_flow() [method] [EXTRACTED] httpx/_auth.py:L193
+
+$ graphify path "DigestAuth" "Response"
+  DigestAuth --uses [INFERRED]--> Response        （1段で直接）
+
+$ graphify query "digest auth flow" --budget 1500
+  164ノード見つかり、上限に合わせて54個だけ返す（省略の警告付き）
+
+$ graphify query "ダイジェスト認証の流れ"
+  No matching nodes found.                        （日本語は0件）</pre>
+ <p class="muted">queryが返すのはファイル名・行番号・グループの一覧で、ソースそのものではない。日本語0件は、Lv4の「言葉が一致しないと見つからない」の実証。</p>
+</div>
+
+<!-- ========== 8 ========== -->
+<h2 id="s8">8. CodeGraph と Graphify の比較</h2>
+<div class="card">
+ <table>
+  <tr><th></th><th>CodeGraph</th><th>Graphify</th></tr>
+  <tr><td>役割</td><td>AIが引く<b>索引</b></td><td>人もAIも使う<b>地図</b>（ドキュメント・PDF・画像もつなげる）</td></tr>
+  <tr><td>最新版</td><td>1.6.1（npm）／MIT</td><td>0.9.76（PyPI <code>graphifyy</code>）／2026-07-22にMIT→Apache-2.0。YC S26の会社、有料のクラウド版あり</td></tr>
+  <tr><td>AIへの返し方</td><td>MCPツール1つ（explore）で<b>ソースそのもの</b>が返る（数万トークン）</td><td>コマンドかMCPで<b>つながりの一覧</b>が返る（小さい。そのあと必要なファイルを読む）</td></tr>
+  <tr><td>使わせる仕組み</td><td>MCPの説明文で誘導。<code>~/.claude/CLAUDE.md</code> にも追記</td><td>CLAUDE.mdのルール＋フックで毎回促す、strictで1回止める</td></tr>
+  <tr><td>更新</td><td>保存から約2秒で自動</td><td><code>graphify update .</code>、またはコミット時のgitフック。<code>--watch</code> もある</td></tr>
+  <tr><td>公式の主張</td><td><b>安く速く</b>（料金44%減など）</td><td><b>正確に</b>（ERPNextで回答のカバー率70.8%→82.0%、6問）。READMEのベンチは会話の記憶の試験</td></tr>
+  <tr><td>得意</td><td>「○○はどう動いている？」に一発で答える</td><td>全体像、AとBのつながり、コメントの「なぜ」やドキュメントとの関係</td></tr>
+  <tr><td>注意</td><td>文脈を多く占める／使用統計の送信が最初からオン（<code>codegraph telemetry off</code>）</td><td>日本語の質問はそのままだと0件／グループ名付けで自動的にClaudeを使う</td></tr>
+ </table>
+</div>
+
+<!-- ========== 9 ========== -->
+<h2 id="s9">9. 途中で訂正したこと</h2>
+<div class="card">
+ <ul>
+  <li>CodeGraphの「トークン62%減」は出典なしと書いたが、<b>公式READMEのベンチ（8/5）にあった</b></li>
+  <li>動画の要約で「20,537字」と書いたが、概要欄では<b>25,307字</b>（自動字幕の聞き間違い）</li>
+  <li>「CLIをブロック」の理由を「MCPとコマンドが混ざるから」と推測したが、原文では<b>「コマンド経由は回数に数えられないのに、文脈は消費する」</b>から</li>
+  <li>機械翻訳の「7で達成したのとほぼ同じ」は、正しくは<b>「grep方式が7回で答えられた質問（Gin）では、コストはほぼ同じ」</b></li>
+  <li>「コードだけなら0円」は不正確。<b>地図作成は0円、グループ名付けはClaude Codeを自動で使う</b></li>
+  <li>前に「813回は4日前」としたのは誤り。検索結果の古い数字だった</li>
+ </ul>
+</div>
+
+<!-- ========== 10 ========== -->
+<h2 id="s10">10. 現状と次のアクション</h2>
+<div class="card">
+ <table>
+  <tr><th>項目</th><th>状態</th></tr>
+  <tr><td>Graphify学習</td><td>Lv1〜Lv5 完了（Lv6 運用、Lv7 まとめが残り）</td></tr>
+  <tr><td>Graphifyコマンド</td><td>pipxで導入済み（0.9.76）。Claude Codeのスキル・フックは未導入</td></tr>
+  <tr><td>練習用の地図</td><td>httpxで作成済み。graph.htmlをブラウザで確認できる</td></tr>
+  <tr><td>CodeGraph</td><td>未導入（資料の読み込みのみ）</td></tr>
+  <tr><td>README解説</td><td>第1回（冒頭〜Prerequisites）まで。第2回以降は未</td></tr>
+ </table>
+</div>
+<div class="step"><h4>A. graph.htmlを触ってみる <span class="badge b-blue">次にやること</span></h4>
+ <span class="muted">検索欄で DigestAuth を探す／「Tests」のグループを外して本体だけ見る／god nodeをGRAPH_REPORT.mdと見比べる。</span></div>
+<div class="step"><h4>B. Lv6 運用 <span class="badge b-green">推奨</span></h4>
+ <span class="muted">更新（update・gitフック・--watch）、除外設定（.graphifyignore）、チームでの使い方、プライバシー。README第3〜5回の解説と合わせて進める。</span></div>
+<div class="step"><h4>C. 自分のプロジェクトで試す</h4>
+ <span class="muted">100ファイル以上のプロジェクトで、<code>graphify install --project</code>（そのプロジェクトだけ）。CodeGraphも同じ質問で比べ、ReadやGrepの回数とトークンを測る。</span></div>
+<div class="step opt"><h4>D. Lv7 まとめ</h4>
+ <span class="muted">CodeGraphとの使い分けを、自分の言葉で決める。</span></div>
+<div class="step opt"><h4>E. 片付けたいとき</h4>
+ <span class="muted"><code>pipx uninstall graphifyy</code> と、練習用フォルダ（graphify_lab）の削除で元に戻る。</span></div>
+
+<!-- ========== 11 ========== -->
+<h2 id="s11">11. 公式資料と保存ファイル</h2>
+<div class="card">
+ <h3>CodeGraph</h3>
+ <ul>
+  <li>ベンチマーク：<a href="https://github.com/colbymchenry/codegraph#benchmark-results">github.com/colbymchenry/codegraph#benchmark-results</a></li>
+  <li>最後に残る文脈：<a href="https://github.com/colbymchenry/codegraph/blob/main/docs/benchmarks/residual-context-occupancy.md">docs/benchmarks/residual-context-occupancy.md</a></li>
+  <li>使用統計：<a href="https://github.com/colbymchenry/codegraph/blob/main/TELEMETRY.md">TELEMETRY.md</a></li>
+ </ul>
+ <h3>Graphify</h3>
+ <ul>
+  <li>README：<a href="https://github.com/Graphify-Labs/graphify/blob/v8/README.md">github.com/Graphify-Labs/graphify/blob/v8/README.md</a></li>
+  <li>仕組み：<a href="https://github.com/Graphify-Labs/graphify/blob/v8/docs/how-it-works.md">docs/how-it-works.md</a>／設計：<a href="https://github.com/Graphify-Labs/graphify/blob/v8/ARCHITECTURE.md">ARCHITECTURE.md</a>／ベンチ：<a href="https://github.com/Graphify-Labs/graphify/blob/v8/BENCHMARKS.md">BENCHMARKS.md</a></li>
+  <li>graph.htmlの画像：<a href="https://raw.githubusercontent.com/Graphify-Labs/graphify/v8/docs/graph-hero.png">docs/graph-hero.png</a>／公式ドキュメント：<a href="https://docs.graphify.com">docs.graphify.com</a></li>
+  <li>PyPI：<a href="https://pypi.org/project/graphifyy/">pypi.org/project/graphifyy</a></li>
+ </ul>
+</div>
+
+<p class="muted" style="margin-top:22px">作成：2026-10-05</p>
+</div></body></html>
